@@ -3,11 +3,7 @@
 # Challenge Details :
 
 ## Tools :
--  [Wireshark](https://www.wireshark.org/download.html)
--  [CyberChef](https://gchq.github.io/CyberChef/)
--  [VirusTotal](https://www.virustotal.com/gui/home/upload) 
--  [AbuseIPDB](https://www.abuseipdb.com/)
--  [Whois](https://www.whois.com/whois/)
+-  [Wireshark](https://www.wireshark.org/download.html) 
 -  [MAC Address Lookup](https://dnschecker.org/mac-lookup.php)
     
 # Challenge Solve :
@@ -87,37 +83,53 @@ then you get pubkey in
 
 -----------------------------------------------------------------------------
 
-**Q8** : What is the name of the most active computer at the network level?
+**Q8** : What is the first TLS 1.3 client random that was used to establish a connection with protonmail.com?
 
-S8 : DHCP traffic can be used to identify the host information such as MAC Address, IP Address, and Hostname. Since I already know the MAC address, I used it to filter the packets to only display the dhcp traffic from the MAC address 00:08:02:1c:47:ae. 
-write in wireshark to filter taffic use this command = eth.addr==00:08:02:1c:47:ae && dhcp ,
+S8 : Go to Statistics > Resolved Address then search for protonmail.com to get it's ip 
 
-Select the first frame and expand Dynamic Host Configuration Protocol and Option (12).
+![Detection](Pictures/13.png)
 
-![Detection](Pictures/10.png)
+then write (ip.dst == 185.70.41.35 && tls) to filter packets and select first packet (hallo client) and then get random
+
+![Detection](Pictures/14.png)
 
 -----------------------------------------------------------------------------
 
-**Q9** : What is the IP of the organization’s DNS server?
+**Q9** : What country is the MAC address of the FTP server registered in? (two words, one space in between)
 
-S9 : Enter in search bar DNS to filter packets and write IP in Destination Show in first frame (10.4.10.4)
+S9 : write (ftp to filter packets and select packet and get mac of ftp server)
 
-![Detection](Pictures/11.png)
+![Detection](Pictures/15.png)
+
+then use MAC address in this Website to get country (https://dnschecker.org/mac-lookup.php)
+
+![Detection](Pictures/16.png)
 
 -------------------------------------------------------------------------------
 
-**Q10** : What domain is the victim asking about in packet 204?
+**Q10** : What time was a non-standard folder created on the FTP server on the 20th of April? (hh:mm)
 
-S10 : use this command to filter packets to show packet 204 (frame.number==204)
-Expanding the Domain Name System and Queries will show the domain that the victim is accessing.
+S10 : use (ftp-data) to filter packet and select first one right click on it the select follow tcp stream  
 
-![Detection](Pictures/12.png)
+![Detection](Pictures/17.png)
+
+show folder created on 20th of april time is (17:53)
+
+![Detection](Pictures/18.png)
 
 ------------------------------------------------------------------------------------
 
-**Q11** : What is the IP of the domain in the previous question?
+**Q11** : What domain was the user connected to in packet 27300?
 
-S11 : add = 217.182.138.132
+S11 : use (frame.number == 27300) then copy destination ip 
 
+![Detection](Pictures/19.png)
 
-![Detection](Pictures/13.png)
+then go to statistics > resolved address 
+
+![Detection](Pictures/20.png)
+
+then write ip and then you get domain name
+
+![Detection](Pictures/21.png)
+
