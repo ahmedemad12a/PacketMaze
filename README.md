@@ -31,44 +31,59 @@ then Write this filter (eth.addr == ca:0b:ad:ad:20:ba && ipv6) IPv6 is in source
 
 
 ----------------------------------------------------------------------------
-**Q3** : What is the duration of the capture?
+**Q3** : What domain is the user looking up in packet 15174?
 
-S3 :  From Capture File Properties look for Elasped under Time.
+S3 :  use this filter to get packet 15174 (frame.number == 15174)
+then extend Domain name system then Queries , you show domain name is (www.7-zip.org)  
 
 ![Detection](Pictures/4.png)
 
 -----------------------------------------------------------------------------
-**Q4** : What is the most active computer at the link level?
+**Q4** : How many UDP packets were sent from 192.168.1.26 to 24.39.217.246?
 
-S4 : To view Ethernet, go to Statistics > Endpoints > Ethernet. Click Packets to sort the packets by descending .
+S4 : Filter packets by using (ip.src== 192.168.1.26 && ip.dst == 24.39.217.246 && udp) and then count packets will be (10 packets)
 
 ![Detection](Pictures/5.png)
+
+-----------------------------------------------------------------------------
+
+**Q5** : What is the MAC address of the system being investigated in the PCAP?”
+
+S5 : use ftp to filter packet and show mac address of source in Ethernet 
 
 ![Detection](Pictures/6.png)
 
 -----------------------------------------------------------------------------
 
-**Q5** : Manufacturer of the NIC of the most active system at the link level?
+**Q6** : What was the camera model name used to take picture 20210429_152157.jpg ?
 
-S5 : Or use a MAC address lookup online. Copy your answer from the previous question and search it on DNSChecker.org .
+S6 : write (ftp-data) to filter packets select first packet
 
 ![Detection](Pictures/7.png)
 
------------------------------------------------------------------------------
-
-**Q6** : Where is the headquarters of the company that manufactured the NIC of the most active computer at the link level?
-
-S6 : Using Google search engine, the results show the headquarters address of Hewlett Packard .
+then use follow tcp stream and select Show data as and select (Raw)
 
 ![Detection](Pictures/8.png)
 
------------------------------------------------------------------------------
-
-**Q7** : The organization works with private addressing and netmask /24. How many computers in the organization are involved in the capture?
-
-S7 : To view the IPv4 addresses, go to Statistics > Endpoints > IPv4 (Answer = 3)
+then click on save as and save data in JPG 
 
 ![Detection](Pictures/9.png)
+
+then click Right on pictures click in properties and seclect details then you show name of camera in camera model
+
+![Detection](Pictures/10.png)
+
+-----------------------------------------------------------------------------
+
+**Q7** : What is the server certificate public key that was used in TLS session: da4a0000342e4b73459d7360b4bea971cc303ac18d29b99067e46d16cc07f4ff?
+
+S7 : use this filter to get certificate (tls.handshake.session_id == da:4a:00:00:34:2e:4b:73:45:9d:73:60:b4:be:a9:71:cc:30:3a:c1:8d:29:b9:90:67:e4:6d:16:cc:07:f4:ff)
+
+![Detection](Pictures/11.png)
+
+then you get pubkey in 
+
+![Detection](Pictures/12.png)
 
 -----------------------------------------------------------------------------
 
